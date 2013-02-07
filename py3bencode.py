@@ -46,7 +46,7 @@ py3bencode is a new GPL-licensed Bencode module developed for Python 3.
 
 def _bytes(_str):
     """
-    Convert ordinary Python string (utf-8) into byte array (should be considered
+    Convert ordinary Python string (utf-8) into bytes object (should be considered
     as c-string).
 
     @rtype:   bytes
@@ -55,7 +55,7 @@ def _bytes(_str):
 
 def _str(_bytes):
     """
-    Attempt to decode byte array back to ordinary Python string (utf-8).
+    Attempt to decode bytes object back to ordinary Python string (utf-8).
 
     Decoding cannot be guaranteed, so be careful.
 
@@ -68,7 +68,7 @@ def _str(_bytes):
 
 def bencode(thing):
     """
-    bencodes the given object, returning a byte array
+    bencodes the given object, returning a bytes object
     containing the bencoded data.
 
     Allowed object types are:
@@ -76,9 +76,9 @@ def bencode(thing):
     - dictionary (dict)
     - integer (int)
     - string (str)
-    - byte array (bytes)
+    - bytes object (bytes)
 
-    Note that all strings will be converted to byte arrays during the
+    Note that all strings will be converted to byte objects during the
     encoding process.
 
     @rtype:   bytes
@@ -113,12 +113,12 @@ def bencode(thing):
 
 def bdecode(data, decode_strings=True, strict=False):
     """
-    Restores/decodes bencoded data. The bencoded data must be given as byte array.
+    Restores/decodes bencoded data. The bencoded data must be given as bytes object.
 
-    Note that all bencode-strings are treated as byte arrays first. Unless
-    decode_strings=False the bdecoder then tries to convert every byte array
+    Note that all bencode-strings are treated as bytes objects first. Unless
+    decode_strings=False the bdecoder then tries to convert every bytes object
     to an ordinary Python string, that means: it tries to interpret every
-    byte string as utf-8 string.
+    bytes object as utf-8 string.
 
     This behavior is meant to make this module more convenient.
     Though I strongly recommend to disable the automatic decoding attempts of
@@ -135,7 +135,7 @@ def bdecode(data, decode_strings=True, strict=False):
     @rtype:   list, dict, int, str or bytes
     """
     if not isinstance(data, bytes):
-        raise TypeError("bdecode expects byte array.")
+        raise TypeError("bdecode expects bytes object.")
 
     return BDecoder(data, decode_strings, strict).decode()
 
